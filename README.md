@@ -6,10 +6,10 @@ A simple tool to fetch [LIBSVM](http://www.csie.ntu.edu.tw/~cjlin/libsvm/) datas
 
 ## Usage
 
-The design matrix `A` and the response variable `y` corresponding to a given dataset can be loaded as follows :
+The design matrix `A` and the response variable `y` corresponding to a given dataset (`a1a` in this example) can be loaded as follows :
 ```julia
 using LIBSVMdata
-A, y = load_dataset("a1a"
+A, y = load_dataset("a1a",
     dense       = false,
     replace     = false,
     normalize   = false,
@@ -18,7 +18,7 @@ A, y = load_dataset("a1a"
 ```
 All the datasets are stored in the folder specified by the environnement variable `LIBSVMDATA_HOME` if it exists. Otherwise, they are stored under `$HOME/data/libsvm`.
 
-Keyword arguments :
+**Arguments :**
 * `dataset::String`: Name of the dataset. All the available datasets can be  
 found using the `print_datasets()` function.
 * `dense::Bool=false`: If `true`, the feature matrix A returned is dense. 
