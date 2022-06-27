@@ -1,1 +1,3 @@
-/Manifest.toml
+Manifest.toml
+.vscode
+.DS_Store
