@@ -21,7 +21,6 @@ using Test
             "dna.scale",
             "iris.scale",
             "mnist",
-            "news20",
             "protein",
         ],
         "regression" => [
