@@ -1,8 +1,11 @@
 # LIBSVMdata.jl
 
 [![Build Status](https://github.com/TheoGuyard/LIBSVMdata.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/TheoGuyard/LIBSVMdata.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![Coverage](https://codecov.io/gh/TheoGuyard/LIBSVMdata.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/TheoGuyard/LIBSVMdata.jl)
 
-A simple tool to fetch [LIBSVM](http://www.csie.ntu.edu.tw/~cjlin/libsvm/) datasets to [Julia](https://julialang.org). Please report any bug in the [issues](https://github.com/TheoGuyard/LIBSVMdata.jl/issues) page.
+A simple tool to fetch [LIBSVM](http://www.csie.ntu.edu.tw/~cjlin/libsvm/) datasets to [Julia](https://julialang.org). 
+
+**Some datasets are not covered by tests due to their size. Please report any bug in the [issues](https://github.com/TheoGuyard/LIBSVMdata.jl/issues) page.**
 
 ## Usage
 
@@ -19,16 +22,11 @@ A, y = load_dataset("a1a",
 All the datasets are stored in the folder specified by the environnement variable `LIBSVMDATA_HOME` if it exists. Otherwise, they are stored under `$HOME/data/libsvm`.
 
 **Arguments :**
-* `dataset::String`: Name of the dataset. All the available datasets can be  
-found using the `print_datasets()` function.
-* `dense::Bool=false`: If `true`, the feature matrix A returned is dense. 
-Otherwise, it is sparse.
-* `replace::Bool=false`: If `true`, the dataset is re-downloaded even if it is 
-found in the dataset directory.
-* `normalize::Bool=false`: If `true`, the columns of the matrix A are normalized
-to one. If the dataset is a regression one, the response y is also normalized to
-one.
-* `verbose::Bool=true`: If `true`, toogle verbosity.
+* `dataset::String`: Name of the dataset. All the available datasets can be found using the `print_datasets()` function.
+* `dense::Bool=false`: If `true`, the feature matrix `A` returned is dense. Otherwise, it is sparse.
+* `replace::Bool=false`: If `true`, the dataset is re-downloaded even if it already exists in the dataset directory.
+* `normalize::Bool=false`: If `true`, the columns of the matrix A are normalized to one. If the dataset is a regression one, the response y is also normalized to one.
+* `verbose::Bool=true`: If `true`, toggle verbosity.
 
 
 ## Available datasets

@@ -8,12 +8,6 @@ using SparseArrays
 
 include("datasets.jl")
 
-get_datasets() = DATASETS
-
-"""
-    get_datasets()
-Return an OrderedDict with all the available datasets and their informations.
-"""
 function get_dataset_home()
     if "LIBSVMDATA_HOME" in keys(ENV)
         return ENV["LIBSVMDATA_HOME"]
@@ -23,9 +17,15 @@ function get_dataset_home()
 end
 
 """
+    get_datasets()
+Return an OrderedDict with all the available datasets and their informations.
+"""
+get_datasets() = DATASETS
+
+"""
     print_datasets()
-Print all the datasets available in LIBSVMdata.jl with their type, the number 
-of data, the number of features and the number of classes (or Inf for 
+Print all the datasets available in `LIBSVMdata.jl` with their type, the number 
+of data points, the number of features and the number of classes (or Inf for 
 classification datasets).
 """
 function print_datasets()
