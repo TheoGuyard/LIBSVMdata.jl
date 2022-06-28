@@ -1,6 +1,6 @@
 # LIBSVMdata.jl
 
-[![Build Status](https://github.com/TheoGuyard/LIBSVMdata.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/TheoGuyard/LIBSVMdata.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![Build Status](https://github.com/TheoGuyard/LIBSVMdata.jl/workflows/CI/badge.svg)](https://github.com//TheoGuyard/LIBSVMdata.jl/actions)
 [![Coverage](https://codecov.io/gh/TheoGuyard/LIBSVMdata.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/TheoGuyard/LIBSVMdata.jl)
 
 A simple tool to fetch [LIBSVM](http://www.csie.ntu.edu.tw/~cjlin/libsvm/) datasets to [Julia](https://julialang.org). 
