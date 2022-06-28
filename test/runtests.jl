@@ -59,7 +59,7 @@ using Test
     end
     @testset "print utilities" begin
         datasets = get_datasets()
-        @test isa(datasets, isa(d, OrderedCollections.OrderedDict))
+        @test isa(datasets, OrderedCollections.OrderedDict)
         print_datasets()
         @test true
     end
