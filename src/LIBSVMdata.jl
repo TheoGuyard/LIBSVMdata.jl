@@ -4,6 +4,7 @@ using Downloads
 using LinearAlgebra
 using OrderedCollections
 using Printf
+using ProgressBars
 using SparseArrays
 
 include("datasets.jl")
@@ -44,7 +45,6 @@ end
         dataset::String;
         dense::Bool=false,
         replace::Bool=false,
-        normalize::Bool=false,
         verbose::Bool=true,
     )
 Load a dataset, ie, return a feature matrix A and a response variable y. All 
@@ -61,9 +61,6 @@ found using the `print_datasets()` function.
 Otherwise, it is sparse.
 * `replace::Bool=false`: If `true`, the dataset is re-downloaded even if it is 
 found in the dataset directory.
-* `normalize::Bool=false`: If `true`, the columns of the matrix A are normalized
-to one. If the dataset is a regression one, the response y is also normalized to
-one.
 * `verbose::Bool=true`: If `true`, toogle verbosity.
 
 # Example
@@ -89,7 +86,6 @@ function load_dataset(
     dataset::String;
     dense::Bool=false,
     replace::Bool=false,
-    normalize::Bool=false,
     verbose::Bool=true,
     )
 
@@ -121,50 +117,61 @@ function load_dataset(
         verbose && println("Replacing the dataset $dataset...")
         Downloads.download(dataset_url, dataset_path, verbose=verbose)
     else
-        verbose && println("The dataset $dataset is already downloaded")
+        verbose && println("The data $dataset was already downloaded")
     end
 
     # Unzip the dataset if needed
     if endswith(dataset_path, ".bz2")
-        unzipped_dataset_path = string(join(split(dataset_path, ".")[begin:end-1]))
-        !isfile(unzipped_dataset_path) && run(`bzip2 -d -k $dataset_path`)
+        unzipped_dataset_path = string(join(split(dataset_path, ".")[begin:end-1], "."))
+        if !isfile(unzipped_dataset_path)
+            verbose && println("Unzipping the dataset...")
+            run(`bzip2 -d -k $dataset_path`)
+        end
         dataset_path = unzipped_dataset_path
     elseif endswith(dataset_path, ".tar.xz")
-        unzipped_dataset_path = string(join(split(dataset_path, ".")[begin:end-2]))
-        !isfile(unzipped_dataset_path) && run(`xz -d -k $dataset_path`)
+        unzipped_dataset_path = string(join(split(dataset_path, ".")[begin:end-2], "."))
+        if !isfile(unzipped_dataset_path)
+            verbose && println("Unzipping the dataset...")
+            run(`xz -d -k $dataset_path`)
+        end
         dataset_path = unzipped_dataset_path
     elseif endswith(dataset_path, ".xz")
-        unzipped_dataset_path = string(join(split(dataset_path, ".")[begin:end-1]))
-        !isfile(unzipped_dataset_path) && run(`xz -d -k $dataset_path`)
+        unzipped_dataset_path = string(join(split(dataset_path, ".")[begin:end-1], "."))
+        if !isfile(unzipped_dataset_path)
+            verbose && println("Unzipping the dataset...")
+            run(`xz -d -k $dataset_path`)
+        end
         dataset_path = unzipped_dataset_path
     end
 
     # Extract the dataset data
-    verbose && println("Loading the dataset file...")
+    verbose && println("Loading the dataset...")
     multilabel = (type == "multilabel")
     A = dense ? zeros(m, n) : spzeros(m, n)
     V = multilabel ? Vector{Vector{Float64}} : Vector{Float64}
     y = V(undef, m)
+    idx_start = 1
     open(dataset_path, "r+") do file
-        for (j, line) in enumerate(readlines(file))
-            elements = split(line, " ")
-            y[j] = multilabel ? parse.(Float64, string.(split(elements[1], ","))) : parse(Float64, elements[1])
-            for element in elements[2:end]
-                isempty(element) && continue
-                s = split(element, ":")
-                i = parse(Int, s[1])
-                v = parse(Float64, s[2])
-                A[j, i] = v
+        lines = readlines(file)
+        pgbar = verbose ? ProgressBar(lines) : lines
+        for (j, line) in enumerate(pgbar)
+            elements = split(line, " ", limit=2)
+            (length(elements) == 1) && push!(elements, "")
+            label, features = elements
+            y[j] = multilabel ? parse.(Float64, string.(split(label, ","))) : parse(Float64, label)
+            for feature in split(features, " ")
+                isempty(feature) && continue
+                idx, val = split(feature, ":")
+                idx = parse(Int, string(idx))
+                val = parse(Float64, string(val))
+                if idx == 0
+                    idx_start = 0
+                end
+                if val != 0
+                    A[j, idx-idx_start+1] = val
+                end
             end
         end
-    end
-
-    # Normalize data if needed
-    if normalize
-        for ai in eachcol(A)
-            any(ai .!= 0.) && normalize!(ai)
-        end
-        (type == "regression") && normalize!(y)
     end
 
     return A, y

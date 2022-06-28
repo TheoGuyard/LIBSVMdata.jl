@@ -1,4 +1,5 @@
 using LIBSVMdata
+using Statistics
 using Test
 
 @testset "LIBSVMdata.jl" begin
@@ -20,8 +21,6 @@ using Test
         "multiclass" => [
             "dna.scale",
             "iris.scale",
-            "mnist",
-            "protein",
         ],
         "regression" => [
             "abalone",
@@ -40,6 +39,8 @@ using Test
             for dataset in datasets
                 @testset "$dataset" begin
                     A, y = load_dataset(dataset, verbose=false)
+                    @test size(A)[1] == size(y)[1]
+                    A, y = load_dataset(dataset, verbose=false, dense=true)
                     @test size(A)[1] == size(y)[1]
                 end
             end

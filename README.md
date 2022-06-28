@@ -15,7 +15,6 @@ using LIBSVMdata
 A, y = load_dataset("a1a",
     dense       = false,
     replace     = false,
-    normalize   = false,
     verbose     = true,
 )
 ```
@@ -25,7 +24,6 @@ All the datasets are stored in the folder specified by the environnement variabl
 * `dataset::String`: Name of the dataset. All the available datasets can be found using the `print_datasets()` function.
 * `dense::Bool=false`: If `true`, the feature matrix `A` returned is dense. Otherwise, it is sparse.
 * `replace::Bool=false`: If `true`, the dataset is re-downloaded even if it already exists in the dataset directory.
-* `normalize::Bool=false`: If `true`, the columns of the matrix A are normalized to one. If the dataset is a regression one, the response y is also normalized to one.
 * `verbose::Bool=true`: If `true`, toggle verbosity.
 
 
