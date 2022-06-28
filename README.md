@@ -5,17 +5,17 @@
 
 A simple tool to fetch [LIBSVM](http://www.csie.ntu.edu.tw/~cjlin/libsvm/) datasets to [Julia](https://julialang.org). 
 
-**Some datasets are not covered by tests due to their size. Please report any bug in the [issues](https://github.com/TheoGuyard/LIBSVMdata.jl/issues) page.**
+**Some datasets are not covered by CI tests due to their data size. Please report any bug in the [issues](https://github.com/TheoGuyard/LIBSVMdata.jl/issues) page.**
 
 ## Usage
 
 The design matrix `A` and the response variable `y` corresponding to a given dataset (`a1a` in this example) can be loaded as follows :
 ```julia
 using LIBSVMdata
-A, y = load_dataset("a1a",
-    dense       = false,
-    replace     = false,
-    verbose     = true,
+A, y = load_dataset("a1a", 
+    dense   = false,
+    replace = false, 
+    verbose = true,
 )
 ```
 All the datasets are stored in the folder specified by the environnement variable `LIBSVMDATA_HOME` if it exists. Otherwise, they are stored under `$HOME/data/libsvm`.
@@ -31,6 +31,7 @@ All the datasets are stored in the folder specified by the environnement variabl
 The available datasets can be listed using the `print_datasets()` function. This function also specifies the dataset type, the number of data points, the number of features and the number of different classes. If the dataset is a regression one, the number of classes is arbitrarily set to `Inf`.
 ```julia
 using LIBSVMdata
+
 print_datasets()
 ==================================================================================
 Dataset name              | Type            | Data       | Features   | Classes   

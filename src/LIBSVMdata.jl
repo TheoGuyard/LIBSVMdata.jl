@@ -1,7 +1,6 @@
 module LIBSVMdata
 
 using Downloads
-using LinearAlgebra
 using OrderedCollections
 using Printf
 using ProgressBars
@@ -91,11 +90,13 @@ function load_dataset(
 
     # Test if the dataset is supported
     if !(dataset in keys(DATASETS))
-        error(
-            "The dataset '$dataset' is not yet supported. You can list the " *
-            "available datasets using the 'print_datasets()' function. " *
-            "Please report this error if you want the dataset '$dataset' to " *
-            "be supported."
+        throw(
+            ArgumentError(
+                "The dataset '$dataset' is not yet supported. You can list the " *
+                "available datasets using the 'print_datasets()' function. " *
+                "Please report this error if you want the dataset '$dataset' to " *
+                "be supported."
+            )
         )
     end
 
