@@ -1,4 +1,5 @@
 using LIBSVMdata
+using OrderedCollections
 using Test
 
 @testset "LIBSVMdata.jl" begin
@@ -58,7 +59,7 @@ using Test
     end
     @testset "print utilities" begin
         datasets = get_datasets()
-        @test isa(datasets, OrderedDict)
+        @test isa(datasets, isa(d, OrderedCollections.OrderedDict))
         print_datasets()
         @test true
     end
