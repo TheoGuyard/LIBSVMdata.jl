@@ -7,9 +7,16 @@ A simple tool to fetch [LIBSVM](http://www.csie.ntu.edu.tw/~cjlin/libsvm/) datas
 
 **Some datasets are not covered by CI tests due to their data size. Please report any bug in the [issues](https://github.com/TheoGuyard/LIBSVMdata.jl/issues) page.**
 
+## Installation
+
+`LIBSVMdata` can be installed as follows :
+```julia
+pkg> add LIBSVMdata
+```
+
 ## Usage
 
-The design matrix `A` and the response variable `y` corresponding to a given dataset (`a1a` in this example) can be loaded as follows :
+The design matrix `A` and the response variable `y` corresponding to a given dataset (`a1a` in this example) can be loaded as  :
 ```julia
 using LIBSVMdata
 A, y = load_dataset("a1a", 
