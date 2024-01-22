@@ -474,8 +474,8 @@ DATASETS = OrderedDict(
         :dims => (677_399, 47_236),
         :ncls => 2,
     ),
-    "ream-sim" => Dict(
-        :file => "ream-sim.bz2",
+    "real-sim" => Dict(
+        :file => "real-sim.bz2",
         :type => "binary",
         :dims => (72_309, 20_958),
         :ncls => 2,
