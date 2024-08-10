@@ -12,7 +12,7 @@ function get_dataset_home()
     if "LIBSVMDATA_HOME" in keys(ENV)
         return ENV["LIBSVMDATA_HOME"]
     else
-        return mkpath(joinpath(homedir(), "data/libsvm"))
+        return mkpath(joinpath(homedir(), "data", "libsvm"))
     end
 end
 
@@ -24,8 +24,8 @@ get_datasets() = DATASETS
 
 """
     print_datasets()
-Print all the datasets available in `LIBSVMdata.jl` with their type, the number 
-of data points, the number of features and the number of classes (or Inf for 
+Print all the datasets available in `LIBSVMdata.jl` with their type, the number
+of data points, the number of features and the number of classes (or Inf for
 classification datasets).
 """
 function print_datasets()
@@ -46,19 +46,19 @@ end
         replace::Bool=false,
         verbose::Bool=true,
     )
-Load a dataset, ie, return a feature matrix A and a response variable y. All 
+Load a dataset, ie, return a feature matrix A and a response variable y. All
 the datasets are stored in the folder specified by the environnement variable
-`LIBSVMDATA_HOME` if it exists. Otherwise, they are stored under 
-`\$HOME/data/libsvm`. If a dataset is not found in the dataset directory, it is 
-first downloaded and unzipped. 
+`LIBSVMDATA_HOME` if it exists. Otherwise, they are stored under
+`\$HOME/data/libsvm`. If a dataset is not found in the dataset directory, it is
+first downloaded and unzipped.
 
 # Arguments
 
-* `dataset::String`: Name of the dataset. All the available datasets can be  
+* `dataset::String`: Name of the dataset. All the available datasets can be
 found using the `print_datasets()` function.
-* `dense::Bool=false`: If `true`, the feature matrix A returned is dense. 
+* `dense::Bool=false`: If `true`, the feature matrix A returned is dense.
 Otherwise, it is sparse.
-* `replace::Bool=false`: If `true`, the dataset is re-downloaded even if it is 
+* `replace::Bool=false`: If `true`, the dataset is re-downloaded even if it is
 found in the dataset directory.
 * `verbose::Bool=true`: If `true`, toogle verbosity.
 
@@ -106,7 +106,7 @@ function load_dataset(
     m, n = DATASETS[dataset][:dims]
 
     # Set useful path variables
-    dataset_home = get_dataset_home()  
+    dataset_home = get_dataset_home()
     dataset_path = joinpath(dataset_home, file)
     dataset_url  = joinpath(BASE_URL, type, file)
 
@@ -114,7 +114,7 @@ function load_dataset(
     if !isfile(dataset_path)
         verbose && println("Downloading the dataset $dataset...")
         Downloads.download(dataset_url, dataset_path, verbose=verbose)
-    elseif replace 
+    elseif replace
         verbose && println("Replacing the dataset $dataset...")
         Downloads.download(dataset_url, dataset_path, verbose=verbose)
     else
