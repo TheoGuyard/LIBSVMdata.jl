@@ -8,6 +8,11 @@ using SparseArrays
 
 include("datasets.jl")
 
+"""
+    get_dataset_home()
+Return the folder where the datasets are stored, either `LIBSVMDATA_HOME` if
+this environnement variable is set, otherwise, `\$HOME/data/libsvm`.
+"""
 function get_dataset_home()
     if "LIBSVMDATA_HOME" in keys(ENV)
         return ENV["LIBSVMDATA_HOME"]
@@ -178,6 +183,6 @@ function load_dataset(
     return A, y
 end
 
-export get_datasets, print_datasets, load_dataset
+export get_dataset_home, get_datasets, print_datasets, load_dataset
 
 end
