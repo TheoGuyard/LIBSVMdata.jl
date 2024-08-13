@@ -108,7 +108,7 @@ function load_dataset(
     # Set useful path variables
     dataset_home = get_dataset_home()
     dataset_path = joinpath(dataset_home, file)
-    dataset_url  = joinpath(BASE_URL, type, file)
+    dataset_url  = join([BASE_URL, type, file], "/")
 
     # Check if the dataset exists and download it otherwise (or if replace=true)
     if !isfile(dataset_path)
