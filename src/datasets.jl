@@ -1,4 +1,4 @@
-BASE_URL = "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/"
+BASE_URL = "https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets"
 DATASETS = OrderedDict(
     # ======================================================================== #
     # Binary
