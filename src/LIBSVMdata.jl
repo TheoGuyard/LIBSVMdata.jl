@@ -153,34 +153,46 @@ function load_dataset(
     # Extract the dataset data
     verbose && println("Loading the dataset...")
     multilabel = (type == "multilabel")
-    A = dense ? zeros(m, n) : spzeros(m, n)
-    V = multilabel ? Vector{Vector{Float64}} : Vector{Float64}
-    y = V(undef, m)
+
+    rows = Int[]
+    cols = Int[]
+    vals = Float64[]
+    y = Vector{multilabel ? Vector{Float64} : Float64}(undef, m)
+
     idx_start = 1
-    open(dataset_path, "r+") do file
+    open(dataset_path, "r") do file
         lines = readlines(file)
         pgbar = verbose ? ProgressBar(lines) : lines
+
         for (j, line) in enumerate(pgbar)
             elements = split(line, " ", limit=2)
             (length(elements) == 1) && push!(elements, "")
+
             label, features = elements
-            y[j] = multilabel ? parse.(Float64, string.(split(label, ","))) : parse(Float64, label)
+            y[j] = multilabel ? parse.(Float64, split(label, ",")) : parse(Float64, label)
+
             for feature in split(features, " ")
                 isempty(feature) && continue
+
                 idx, val = split(feature, ":")
                 idx = parse(Int, string(idx))
                 val = parse(Float64, string(val))
+
                 if idx == 0
                     idx_start = 0
                 end
-                if val != 0
-                    A[j, idx-idx_start+1] = val
+
+                if val != 0.
+                    push!(rows, j)
+                    push!(cols, idx-idx_start+1)
+                    push!(vals, val)
                 end
             end
         end
     end
 
-    return A, y
+    A = sparse(rows, cols, vals, m, n)
+    return dense ? Matrix(A) : A, y
 end
 
 export get_dataset_home, get_datasets, print_datasets, load_dataset
