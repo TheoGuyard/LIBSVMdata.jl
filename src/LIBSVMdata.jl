@@ -165,30 +165,27 @@ function load_dataset(
         pgbar = verbose ? ProgressBar(lines) : lines
 
         for (j, line) in enumerate(pgbar)
-            parts = split(line, ' ', limit=2)
+            elements = split(line, " ", limit=2)
+            (length(elements) == 1) && push!(elements, "")
 
-            label = parts[1]
+            label, features = elements
             y[j] = multilabel ? parse.(Float64, split(label, ",")) : parse(Float64, label)
 
-            if length(parts) > 1
-                for feature in eachsplit(parts[2], ' ')
-                    isempty(feature) && continue
+            for feature in split(features, " ")
+                isempty(feature) && continue
 
-                    colon_pos = findfirst(':', feature)
-                    isnothing(colon_pos) && continue
+                idx, val = split(feature, ":")
+                idx = parse(Int, string(idx))
+                val = parse(Float64, string(val))
 
-                    idx = parse(Int, view(feature, 1:(colon_pos-1)))
-                    val = parse(Float64, view(feature, (colon_pos+1):length(feature)))
+                if idx == 0
+                    idx_start = 0
+                end
 
-                    if idx == 0
-                        idx_start = 0
-                    end
-
-                    if val != 0
-                        push!(rows, j)
-                        push!(cols, idx-idx_start+1)
-                        push!(vals, val)
-                    end
+                if val != 0.
+                    push!(rows, j)
+                    push!(cols, idx-idx_start+1)
+                    push!(vals, val)
                 end
             end
         end
