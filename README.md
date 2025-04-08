@@ -119,7 +119,7 @@ news20.binary             | binary          | 19996      | 1355191    | 2
 phishing                  | binary          | 11055      | 68         | 2         
 rcv1_train.binary         | binary          | 20242      | 47236      | 2         
 rcv1_test.binary          | binary          | 677399     | 47236      | 2         
-ream-sim                  | binary          | 72309      | 20958      | 2         
+real-sim                  | binary          | 72309      | 20958      | 2         
 skin_nonskin              | binary          | 245057     | 3          | 2         
 splice                    | binary          | 1000       | 60         | 2         
 splice_scale              | binary          | 1000       | 60         | 2         
