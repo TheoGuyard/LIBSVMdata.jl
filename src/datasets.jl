@@ -100,13 +100,13 @@ DATASETS = OrderedDict(
         :ncls => 2,
     ),
     "a9a" => Dict(
-        :file => "a8a",
+        :file => "a9a",
         :type => "binary",
         :dims => (32_561, 123),
         :ncls => 2,
     ),
     "a9a.t" => Dict(
-        :file => "a8a.t",
+        :file => "a9a.t",
         :type => "binary",
         :dims => (16_281, 123),
         :ncls => 2,
