@@ -25,7 +25,7 @@ A, y = load_dataset("a1a",
     verbose = true,
 )
 ```
-All the datasets are stored in the folder specified by the environnement variable `LIBSVMDATA_HOME` if it exists. Otherwise, they are stored under `$HOME/data/libsvm`.
+All the datasets are stored in the folder specified by the `get_dataset_home()` function. The first choice is the `LIBSVMDATA_HOME` environnement variable if it is set. Otherwise, they are stored under the path returned by the `user_data_dir("LIBSVMdata.jl")` function from the [AppDirs.jl](https://github.com/JackDunnNZ/AppDirs.jl/tree/main) package.
 
 **Arguments :**
 * `dataset::String`: Name of the dataset. All the available datasets can be found using the `print_datasets()` function.

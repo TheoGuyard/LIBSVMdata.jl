@@ -1,5 +1,6 @@
 module LIBSVMdata
 
+using AppDirs
 using Downloads
 using OrderedCollections
 using Printf
@@ -10,15 +11,21 @@ include("datasets.jl")
 
 """
     get_dataset_home()
-Return the folder where the datasets are stored, either `LIBSVMDATA_HOME` if
-this environnement variable is set, otherwise, `\$HOME/data/libsvm`.
+Return the folder where the datasets are stored. The first choice is the
+`LIBSVMDATA_HOME` environnement variable if it is set. The fallback goes to
+the path returned by `user_data_dir("LIBSVMdata.jl")` from the AppDirs.jl
+package.
 """
 function get_dataset_home()
     if "LIBSVMDATA_HOME" in keys(ENV)
-        return ENV["LIBSVMDATA_HOME"]
+        dataset_home = ENV["LIBSVMDATA_HOME"]
     else
-        return mkpath(joinpath(homedir(), "data", "libsvm"))
+        dataset_home = user_data_dir("LIBSVMdata.jl")
     end
+    if !isdir(dataset_home)
+        mkpath(dataset_home)
+    end
+    return dataset_home
 end
 
 """
@@ -52,9 +59,8 @@ end
         verbose::Bool=true,
     )
 Load a dataset, ie, return a feature matrix A and a response variable y. All
-the datasets are stored in the folder specified by the environnement variable
-`LIBSVMDATA_HOME` if it exists. Otherwise, they are stored under
-`\$HOME/data/libsvm`. If a dataset is not found in the dataset directory, it is
+the datasets are stored in the folder returned by the `get_dataset_home()`
+function. If a dataset is not found in this dataset folder, it is
 first downloaded and unzipped.
 
 # Arguments

@@ -4,6 +4,7 @@ authors = ["Theo Guyard"]
 version = "0.1.4"
 
 [deps]
+AppDirs = "5a4fb9a2-b02d-4ffe-b178-6027dc2bc1ce"
 Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 OrderedCollections = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
 Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
