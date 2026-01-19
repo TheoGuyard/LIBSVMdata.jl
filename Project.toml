@@ -1,7 +1,7 @@
 name = "LIBSVMdata"
 uuid = "e26130ba-f664-4e1e-a986-1cbf7dd5bec7"
 authors = ["Theo Guyard"]
-version = "0.1.4"
+version = "0.1.5"
 
 [deps]
 AppDirs = "5a4fb9a2-b02d-4ffe-b178-6027dc2bc1ce"
